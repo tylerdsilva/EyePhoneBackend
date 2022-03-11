@@ -8,7 +8,12 @@ app = Flask(__name__)
 CORS(app)
 
 
-@app.route('/audio', methods=['POST'])
+# @app.route('/')
+# def hello():
+#     return 'Hello, World!'
+
+
+@app.route('/metrics/', methods=['POST'])
 def process_audio():
     data = request.get_data()
     data_length = request.content_length
@@ -17,6 +22,7 @@ def process_audio():
         return 'File too large!', 400
 
     # process data here:
-    print("Processing data: ", data)
+    print("Processing data: ", type(data))
+    print(data)
 
     return json.dumps({"text": "Audio successfully processed!"}), 200
