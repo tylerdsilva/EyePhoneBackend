@@ -1,1 +1,1 @@
-web: gunicorn app:app
+web: gunicorn eyephone:app --log-file=-
