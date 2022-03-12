@@ -51,6 +51,7 @@ def process_audio():
     # opens the file 'output.avi' which is accessible as 'out_file'
     with open(FILE_OUTPUT, "wb") as out_file:  # open for [w]riting as [b]inary
         out_file.write(data)
+    out_file.close()
 
     storage.child("output.avi").put("output.avi")
 
