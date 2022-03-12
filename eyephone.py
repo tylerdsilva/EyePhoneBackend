@@ -45,7 +45,7 @@ def process_audio():
 
     # Checks and deletes the output file
     # You cant have a existing file or it will through an error
-    if os.path.isfile(FILE_OUTPUT):
+    if os.path.exists(FILE_OUTPUT):
         os.remove(FILE_OUTPUT)
 
     # opens the file 'output.avi' which is accessible as 'out_file'
