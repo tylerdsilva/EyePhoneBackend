@@ -57,14 +57,14 @@ def process_audio():
     vidcap = cv2.VideoCapture('output.avi')
     success, image = vidcap.read()
     count = 0
-    cwd = os.getcwd()
-    directory = os.path.join(cwd, 'image_frames')
+    # cwd = os.getcwd()
+    # directory = os.path.join(cwd, 'image_frames')
 
     while success:
-        os.chdir(directory)
+        os.chdir('image_frames')
         cv2.imwrite("frame%d.jpg" % count, image)  # save frame as JPEG file
         success, image = vidcap.read()
         count += 1
-        os.chdir(cwd)
+        # os.chdir(cwd)
 
     return json.dumps({"diameter": 50, "constriction_velocity": 30}), 200
