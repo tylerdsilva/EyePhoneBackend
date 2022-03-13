@@ -58,7 +58,7 @@ def process_audio():
     success, image = vidcap.read()
     count = 0
     cwd = os.getcwd()
-    directory = os.path.join(cwd, 'image frames')
+    directory = os.path.join(cwd, 'image_frames')
 
     while success:
         os.chdir(directory)
