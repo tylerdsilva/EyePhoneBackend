@@ -1,7 +1,7 @@
 import json
 import os
 import pyrebase
-
+import cv2
 from flask import Flask
 from flask import request
 from flask_cors import CORS
@@ -53,6 +53,18 @@ def process_audio():
         out_file.write(data)
     out_file.close()
 
-    storage.child("output.avi").put("output.avi")
+    # convert video to images, stored in image frames folder
+    vidcap = cv2.VideoCapture('output.avi')
+    success, image = vidcap.read()
+    count = 0
+    cwd = os.getcwd()
+    directory = os.path.join(cwd, 'image frames')
 
-    return json.dumps({"diameter": 60, "constriction_velocity": 20}), 200
+    while success:
+        os.chdir(directory)
+        cv2.imwrite("frame%d.jpg" % count, image)  # save frame as JPEG file
+        success, image = vidcap.read()
+        count += 1
+        os.chdir(cwd)
+
+    return json.dumps({"diameter": 50, "constriction_velocity": 30}), 200
