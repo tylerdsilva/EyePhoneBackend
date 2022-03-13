@@ -55,4 +55,4 @@ def process_audio():
 
     storage.child("output.avi").put("output.avi")
 
-    return json.dumps({"diameter": 50, "constriction_velocity": 30}), 200
+    return json.dumps({"diameter": 60, "constriction_velocity": 20}), 200
