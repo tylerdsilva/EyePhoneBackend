@@ -5,6 +5,8 @@ import cv2
 from flask import Flask
 from flask import request
 from flask_cors import CORS
+from ellipse import computeEllipse
+from metrics import computeMetrics
 
 firebaseConfig = {
     "apiKey": "AIzaSyA7_Vtd1KtxTNsVphWKB6MmU1uOrR1LPU8",
@@ -57,14 +59,24 @@ def process_audio():
     vidcap = cv2.VideoCapture('output.avi')
     success, image = vidcap.read()
     count = 0
-    # cwd = os.getcwd()
-    # directory = os.path.join(cwd, 'image_frames')
+    frameCount = []
+    imageFrames = []
 
     while success:
-        os.chdir('image_frames')
-        cv2.imwrite("frame%d.jpg" % count, image)  # save frame as JPEG file
-        success, image = vidcap.read()
+        success,image = vidcap.read()
         count += 1
-        # os.chdir(cwd)
+        imageFrames.append(image)
+        frameCount.append(count)
+
+    ### Compute Metrics
+    # masks from ML, assume to be binary data e.g. cv2.imread(file, 0)
+    masks = []
+    image_frames = imageFrames
+    diameters = computeEllipse(masks)
+    print(diameters)
+
+    velocity = computeMetrics(diameters, image_frames)
+    print(velocity)
+
 
     return json.dumps({"diameter": 50, "constriction_velocity": 30}), 200
