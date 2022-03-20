@@ -1,12 +1,8 @@
 import json
-import os
+
 import pyrebase
-import cv2
 from flask import Flask
-from flask import request
 from flask_cors import CORS
-from ellipse import computeEllipse
-from metrics import computeMetrics
 
 firebaseConfig = {
     "apiKey": "AIzaSyA7_Vtd1KtxTNsVphWKB6MmU1uOrR1LPU8",
