@@ -5,6 +5,8 @@ import cv2
 from flask import Flask
 from flask import request
 from flask_cors import CORS
+from ellipse import computeEllipse
+from metrics import computeMetrics
 
 firebaseConfig = {
     "apiKey": "AIzaSyA7_Vtd1KtxTNsVphWKB6MmU1uOrR1LPU8",
@@ -34,24 +36,24 @@ def hello():
 def process_audio():
     FILE_OUTPUT = 'output.avi'
 
-    data = request.get_data()
-    data_length = request.content_length
-
-    if data_length > 1024 * 1024 * 10:
-        return 'File too large!', 400
-
-    # process data here:
-    print("Processing data: ", data)
-
-    # Checks and deletes the output file
-    # You cant have a existing file or it will through an error
-    if os.path.exists(FILE_OUTPUT):
-        os.remove(FILE_OUTPUT)
-
-    # opens the file 'output.avi' which is accessible as 'out_file'
-    with open(FILE_OUTPUT, "wb") as out_file:  # open for [w]riting as [b]inary
-        out_file.write(data)
-    out_file.close()
+    # data = request.get_data()
+    # data_length = request.content_length
+    #
+    # if data_length > 1024 * 1024 * 10:
+    #     return 'File too large!', 400
+    #
+    # # process data here:
+    # # print("Processing data: ", data)
+    #
+    # # Checks and deletes the output file
+    # # You cant have a existing file or it will through an error
+    # if os.path.exists(FILE_OUTPUT):
+    #     os.remove(FILE_OUTPUT)
+    #
+    # # opens the file 'output.avi' which is accessible as 'out_file'
+    # with open(FILE_OUTPUT, "wb") as out_file:  # open for [w]riting as [b]inary
+    #     out_file.write(data)
+    # out_file.close()
 
     # # convert video to images, stored in image frames folder
     # vidcap = cv2.VideoCapture('output.avi')
@@ -67,4 +69,4 @@ def process_audio():
     #     count += 1
     #     os.chdir(cwd)
 
-    return json.dumps({"diameter": 50, "constriction_velocity": 30}), 200
+    return json.dumps({"diameter": 3, "constriction_velocity": 5.6}), 200
